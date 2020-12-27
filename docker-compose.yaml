@@ -6,15 +6,15 @@ services:
     image: mysql:5.7
     
     networks: 
-      - lokal-blog-Net
+      - WP-Net
     restart: always
     environment:
       MYSQL_DATABASE: WPLokalDB
       MYSQL_USER: Master
-      MYSQL_PASSWORD: Elephant2020!
+      MYSQL_PASSWORD: Table2020!
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
-      - ./db:/var/lib/mysql
+      - /efs/db:/var/lib/mysql
     expose: 
       - "3306"
 
@@ -22,16 +22,13 @@ services:
     image: wordpress
     restart: always
     networks: 
-      - lokal-blog-Net
-    # ports: 
-    #   - 8080:80
+      - WP-Net
     expose:
-    #   # - "80"
       - "9000"
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: Master
-      WORDPRESS_DB_PASSWORD: Elephant2020!
+      WORDPRESS_DB_PASSWORD: Table2020!
       WORDPRESS_DB_NAME: WPLokalDB
     volumes:
       - ./wordpress:/var/www/html
@@ -44,7 +41,7 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     networks: 
-      - lokal-blog-Net
+      - WP-Net
     
     ports:
         - 80:80
@@ -57,7 +54,7 @@ services:
     restart: always
 
 networks: 
-  lokal-blog-Net:
+  WP-Net:
 
     
 volumes:
